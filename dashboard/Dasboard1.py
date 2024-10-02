@@ -4,14 +4,12 @@ import matplotlib.image as mpimg
 import seaborn as sns
 import streamlit as st
 import urllib
-from datetime import datetime, timedelta
 from func import DataAnalyzer, BrazilMapPlotter
 
 sns.set(style='white')
 st.set_page_config(page_title="E-Commerce Dashboard")
 
 # Dataset
-datetime_cols = ["order_approved_at", "order_delivered_carrier_date", "order_delivered_customer_date", "order_estimated_delivery_date", "order_purchase_timestamp", "shipping_limit_date"]
 all_df = pd.read_csv("https://raw.githubusercontent.com/mhdhfzz/data-analyst-dicoding/main/dashboard/df.csv")
 all_df.sort_values(by="order_approved_at", inplace=True)
 all_df.reset_index(inplace=True)
@@ -20,15 +18,10 @@ all_df.reset_index(inplace=True)
 geolocation = pd.read_csv('https://raw.githubusercontent.com/mhdhfzz/data-analyst-dicoding/main/dashboard/geolocation.csv')
 data = geolocation.drop_duplicates(subset='customer_unique_id')
 
+# Ubah kolom menjadi datetime
+datetime_cols = ["order_approved_at", "order_delivered_carrier_date", "order_delivered_customer_date", "order_estimated_delivery_date", "order_purchase_timestamp", "shipping_limit_date"]
 for col in datetime_cols:
     all_df[col] = pd.to_datetime(all_df[col])
-
-start_date, end_date = st.date_input(
-    label="Select Date Range",
-    value=(min_date.date(), max_date.date()),  
-    min_value=min_date.date(),
-    max_value=max_date.date()
-)
 
 # Sidebar
 with st.sidebar:
@@ -40,26 +33,7 @@ with st.sidebar:
     with col3:
         st.write(' ')
 
-min_date = all_df["order_approved_at"].min()
-max_date = all_df["order_approved_at"].max()
-
-# Sidebar
-start_date, end_date = st.date_input(
-    label="Select Date Range",
-    value=(min_date, max_date),  # Pastikan ini sesuai dengan format datetime
-    min_value=min_date,
-    max_value=max_date
-)
-
-if not all_df["order_approved_at"].empty:
-    min_date = all_df["order_approved_at"].min()
-    max_date = all_df["order_approved_at"].max()
-else:
-    st.error("DataFrame 'all_df' kosong.")
-    min_date = max_date = datetime.date.today()  # atau nilai default lain
-
-
-function = DataAnalyzer(main_df)
+function = DataAnalyzer(all_df)
 map_plot = BrazilMapPlotter(data, plt, mpimg, urllib, st)
 
 daily_orders_df = function.create_daily_orders_df()
@@ -87,6 +61,7 @@ with col2:
     total_revenue = daily_orders_df["revenue"].sum()
     st.markdown(f"Total Revenue: **{total_revenue}**")
 
+# Grafik untuk Order Harian
 fig, ax = plt.subplots(figsize=(12, 6))
 sns.lineplot(
     x=daily_orders_df["order_approved_at"],
@@ -111,6 +86,7 @@ with col2:
     avg_spend = sum_spend_df["total_spend"].mean()
     st.markdown(f"Average Spend: **{avg_spend}**")
 
+# Grafik untuk Total Pengeluaran
 fig, ax = plt.subplots(figsize=(12, 6))
 sns.lineplot(
     data=sum_spend_df,
@@ -120,7 +96,6 @@ sns.lineplot(
     linewidth=2,
     color="#90CAF9"
 )
-
 ax.tick_params(axis="x", rotation=45)
 ax.tick_params(axis="y", labelsize=15)
 st.pyplot(fig)
@@ -137,6 +112,7 @@ with col2:
     avg_items = sum_order_items_df["product_count"].mean()
     st.markdown(f"Average Items: **{avg_items}**")
 
+# Grafik untuk Jumlah Item Pesanan
 fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(45, 25))
 
 sns.barplot(x="product_count", y="product_category_name_english", data=sum_order_items_df.head(5), palette="viridis", ax=ax[0])
@@ -170,6 +146,7 @@ with col2:
     most_common_review_score = review_score.value_counts().idxmax()
     st.markdown(f"Most Common Review Score: **{most_common_review_score}**")
 
+# Grafik untuk Skor Ulasan
 fig, ax = plt.subplots(figsize=(12, 6))
 colors = sns.color_palette("viridis", len(review_score))
 
