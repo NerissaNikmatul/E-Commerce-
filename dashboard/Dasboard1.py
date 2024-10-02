@@ -23,9 +23,12 @@ data = geolocation.drop_duplicates(subset='customer_unique_id')
 for col in datetime_cols:
     all_df[col] = pd.to_datetime(all_df[col])
 
-now = datetime.now()
-start_date = now.replace(day=1)  # First day of the month
-end_date = (start_date + timedelta(days=31)).replace(day=1) - timedelta(days=1)  # Last day of the month
+start_date, end_date = st.date_input(
+    label="Select Date Range",
+    value=(min_date.date(), max_date.date()),  # Pastikan ini dalam format yang benar
+    min_value=min_date.date(),
+    max_value=max_date.date()
+)
 
 # Sidebar
 with st.sidebar:
@@ -37,17 +40,16 @@ with st.sidebar:
     with col3:
         st.write(' ')
 
-    # Date Range
-    start_date, end_date = st.date_input(
-        label="Select Date Range",
-        value=[start_date.date(), end_date.date()],
-        min_value=all_df["order_approved_at"].min().date(),
-        max_value=all_df["order_approved_at"].max().date()
-    )
+min_date = all_df["order_approved_at"].min()
+max_date = all_df["order_approved_at"].max()
 
-# Main
-main_df = all_df[(all_df["order_approved_at"] >= str(start_date)) & 
-                 (all_df["order_approved_at"] <= str(end_date))]
+# Sidebar
+start_date, end_date = st.date_input(
+    label="Select Date Range",
+    value=(min_date, max_date),  # Pastikan ini sesuai dengan format datetime
+    min_value=min_date,
+    max_value=max_date
+)
 
 
 function = DataAnalyzer(main_df)
