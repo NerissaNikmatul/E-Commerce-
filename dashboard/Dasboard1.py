@@ -4,6 +4,7 @@ import matplotlib.image as mpimg
 import seaborn as sns
 import streamlit as st
 import urllib
+from datetime import datetime
 from func import DataAnalyzer, BrazilMapPlotter
 
 sns.set(style='white')
