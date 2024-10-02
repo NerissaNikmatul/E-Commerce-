@@ -23,6 +23,13 @@ datetime_cols = ["order_approved_at", "order_delivered_carrier_date", "order_del
 for col in datetime_cols:
     all_df[col] = pd.to_datetime(all_df[col])
 
+if not all_df["order_approved_at"].empty:
+    min_date = all_df["order_approved_at"].min().date()  # Ubah ke .date()
+    max_date = all_df["order_approved_at"].max().date()  # Ubah ke .date()
+else:
+    st.error("DataFrame 'all_df' kosong.")
+    min_date = max_date = datetime.now().date()  # Menggunakan tanggal saat ini sebagai default jika kosong
+
 # Sidebar
 with st.sidebar:
     col1, col2, col3 = st.columns(3)
@@ -32,6 +39,13 @@ with st.sidebar:
         st.image("https://raw.githubusercontent.com/NerissaNikmatul/E-Commerce-/main/dashboard/Systems%20and%20technology%20programming%20company%20logo.png", width=100)
     with col3:
         st.write(' ')
+
+start_date, end_date = st.date_input(
+    label="Select Date Range",
+    value=(min_date, max_date),
+    min_value=min_date,
+    max_value=max_date
+)
 
 function = DataAnalyzer(all_df)
 map_plot = BrazilMapPlotter(data, plt, mpimg, urllib, st)
