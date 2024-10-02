@@ -1,5 +1,5 @@
 # E-Commerce Public Data Analysis with Python - Dicoding
-![E-Commerce Data Dashboard](Picture)
+![E-Commerce Data Dashboard](https://github.com/NerissaNikmatul/E-Commerce-/tree/main/Picture)
 
 [E-Commerce Data Dashboard Streamlit App](https://nerissanikma.streamlit.app/)
 
