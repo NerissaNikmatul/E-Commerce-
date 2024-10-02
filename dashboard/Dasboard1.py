@@ -179,31 +179,4 @@ for i, v in enumerate(review_score.values):
 
 st.pyplot(fig)
 
-# Customer Demographic
-st.subheader("Customer Demographic")
-tab1, tab2 = st.tabs(["State", "Geolocation"])
-
-with tab1:
-    most_common_state = state.customer_state.value_counts().index[0]
-    st.markdown(f"Most Common State: **{most_common_state}**")
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-    sns.barplot(x=state.customer_state.value_counts().index,
-                y=state.customer_count.values, 
-                data=state,
-                palette="viridis"
-                    )
-
-    plt.title("Number customers from State", fontsize=15)
-    plt.xlabel("State")
-    plt.ylabel("Number of Customers")
-    plt.xticks(fontsize=12)
-    st.pyplot(fig)
-
-with tab2:
-    map_plot.plot()
-
-    with st.expander("See Explanation"):
-        st.write('According to the graph that has been created, there are more customers in the southeast and south. Other information, there are more customers in cities that are capitals (São Paulo, Rio de Janeiro, Porto Alegre, and others).')
-
 st.caption('Copyright (C) Nerissa Nikmatul Qoiriyah 2024')
