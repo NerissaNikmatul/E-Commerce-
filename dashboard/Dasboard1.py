@@ -7,7 +7,7 @@ import urllib
 from datetime import datetime, timedelta
 from func import DataAnalyzer, BrazilMapPlotter
 
-sns.set(style='dark')
+sns.set(style='white')
 st.set_page_config(page_title="E-Commerce Dashboard")
 
 # Dataset
@@ -23,8 +23,9 @@ data = geolocation.drop_duplicates(subset='customer_unique_id')
 for col in datetime_cols:
     all_df[col] = pd.to_datetime(all_df[col])
 
-min_date = all_df["order_approved_at"].min()
-max_date = all_df["order_approved_at"].max()
+now = datetime.now()
+start_date = now.replace(day=1)  # First day of the month
+end_date = (start_date + timedelta(days=31)).replace(day=1) - timedelta(days=1)  # Last day of the month
 
 # Sidebar
 with st.sidebar:
