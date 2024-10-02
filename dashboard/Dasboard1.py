@@ -25,7 +25,7 @@ for col in datetime_cols:
 
 start_date, end_date = st.date_input(
     label="Select Date Range",
-    value=(min_date.date(), max_date.date()),  # Pastikan ini dalam format yang benar
+    value=(min_date.date(), max_date.date()),  
     min_value=min_date.date(),
     max_value=max_date.date()
 )
@@ -50,6 +50,13 @@ start_date, end_date = st.date_input(
     min_value=min_date,
     max_value=max_date
 )
+
+if not all_df["order_approved_at"].empty:
+    min_date = all_df["order_approved_at"].min()
+    max_date = all_df["order_approved_at"].max()
+else:
+    st.error("DataFrame 'all_df' kosong.")
+    min_date = max_date = datetime.date.today()  # atau nilai default lain
 
 
 function = DataAnalyzer(main_df)
