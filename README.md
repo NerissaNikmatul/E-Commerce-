@@ -9,3 +9,8 @@
 - `data`: Directory containing the raw CSV data files.
 - `notebook.ipynb`: This file is used to perform data analysis.
 - `README.md`: This documentation file.
+
+## Run steamlit app
+```
+streamlit run Dashboard1.py
+```
