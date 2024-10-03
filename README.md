@@ -1,7 +1,7 @@
 # Dicoding Collection Dashboard ✨
 # E-Commerce Public Data Analysis with Python
 
-![E-Commerce Data Dashboard](https://github.com/NerissaNikmatul/E-Commerce-/tree/main/Picture)
+![E-Commerce Data Dashboard](https://github.com/NerissaNikmatul/E-Commerce-/blob/main/Picture/Screenshot%202024-10-02%20204213.png)
 
 [E-Commerce Data Dashboard Streamlit App](https://nerissanikma.streamlit.app/)
 
