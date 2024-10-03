@@ -23,8 +23,8 @@ Proyek ini bertujuan untuk menganalisis data publik dari e-commerce menggunakan 
 Untuk menyiapkan lingkungan pengembangan, ikuti langkah-langkah berikut:
 
 ```bash
-mkdir E-commerce
-cd E-commerce
+mkdir E-Commerce
+cd E-Commerce
 pipenv install
 pipenv shell
 pipenv install pandas matplotlib seaborn streamlit
