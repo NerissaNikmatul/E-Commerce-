@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 import urllib
-from func import DataAnalyzer, BrazilMapPlotter
+from func import DataAnalyzer
 
 sns.set(style='whitegrid')
 
