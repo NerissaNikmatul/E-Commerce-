@@ -8,16 +8,23 @@
 ## Deskripsi Proyek
 Proyek ini bertujuan untuk menganalisis data publik dari e-commerce menggunakan Python. Dashboard yang dibuat menampilkan visualisasi data untuk menjawab pertanyaan bisnis penting, seperti tren penjualan harian dan total pengeluaran pelanggan. Dengan menggunakan Streamlit, pengguna dapat berinteraksi dengan data secara dinamis.
 
+## Fitur
+- Pesanan Harian Terkirim: Grafik garis yang memvisualisasikan jumlah pesanan yang dikirim setiap hari.
+- Pengeluaran Pelanggan: Grafik garis yang menampilkan total dan rata-rata pengeluaran pelanggan seiring waktu.
+- Skor Ulasan: Grafik batang yang menunjukkan ulasan pelanggan.
+- Penjualan Produk: Perbandingan kategori produk yang paling banyak terjual dan paling sedikit terjual.
+
 ## Table of Contents
 - [Project Structure](#project-structure)
 - [Run Streamlit App](#run-streamlit-app)
 - [Setup Environment](#setup-environment)
 
 ## Project Structure
-- `dashboard`: Direktori ini berisi `dashboard.py` yang digunakan untuk membuat dashboard dari hasil analisis data.
-- `data`: Direktori yang berisi file CSV data mentah.
-- `notebook.ipynb`: File ini digunakan untuk melakukan analisis data.
-- `README.md`: File dokumentasi ini.
+- Dasboard1.py: File utama yang berisi kode untuk dashboard Streamlit.
+- df.csv: Dataset yang berisi data pesanan.
+- geolocation.csv: (Opsional) Dataset untuk data geolokasi.
+- func.py: File helper yang berisi class DataAnalyzer yang digunakan untuk pemrosesan data.
+- README.md: File ini, yang menyediakan petunjuk untuk setup dan penggunaan.
 
 ## Setup Environment
 Untuk menyiapkan lingkungan pengembangan, ikuti langkah-langkah berikut:
