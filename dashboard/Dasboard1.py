@@ -6,7 +6,7 @@ import streamlit as st
 import urllib
 from func import DataAnalyzer, BrazilMapPlotter
 
-sns.set(style='white')
+sns.set(style='dark')
 
 # Dataset
 datetime_cols = ["order_approved_at", "order_delivered_carrier_date", "order_delivered_customer_date", "order_estimated_delivery_date", "order_purchase_timestamp", "shipping_limit_date"]
