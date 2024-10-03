@@ -23,17 +23,8 @@ Proyek ini bertujuan untuk menganalisis data publik dari e-commerce menggunakan 
 Untuk menyiapkan lingkungan pengembangan, ikuti langkah-langkah berikut:
 
 ```bash
-# Buat direktori untuk proyek analisis data
 mkdir E-commerce
-
-# Masuk ke dalam direktori proyek
 cd E-commerce
-
-# Inisialisasi proyek dengan pipenv
 pipenv install
-
-# Masuk ke dalam shell virtual environment
 pipenv shell
-
-# Install semua dependensi dari file requirements.txt
 pip install -r requirements.txt
