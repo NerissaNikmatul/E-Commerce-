@@ -16,7 +16,6 @@ Proyek ini bertujuan untuk menganalisis data publik dari e-commerce menggunakan 
 
 ## Table of Contents
 - [Project Structure](#project-structure)
-- [Run Streamlit App](#run-streamlit-app)
 - [Setup Environment](#setup-environment)
 
 ## Project Structure
