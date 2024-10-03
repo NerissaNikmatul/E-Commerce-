@@ -11,7 +11,6 @@ sns.set(style='white')
 # Dataset
 datetime_cols = ["order_approved_at", "order_delivered_carrier_date", "order_delivered_customer_date", "order_estimated_delivery_date", "order_purchase_timestamp", "shipping_limit_date"]
 all_df = pd.read_csv("https://raw.githubusercontent.com/NerissaNikmatul/E-Commerce-/main/df.csv")
-")
 all_df.sort_values(by="order_approved_at", inplace=True)
 all_df.reset_index(inplace=True)
 
