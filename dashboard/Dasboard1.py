@@ -2,20 +2,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
-import urllib
 from func import DataAnalyzer
 
-sns.set(style='whitegrid')
+sns.set(style='white')
 
 # Dataset
-datetime_cols = ["order_approved_at", "order_delivered_carrier_date", "order_delivered_customer_date", "order_estimated_delivery_date", "order_purchase_timestamp", "shipping_limit_date"]
+datetime_cols = ["order_approved_at", "order_delivered_carrier_date", "order_delivered_customer_date", 
+                 "order_estimated_delivery_date", "order_purchase_timestamp", "shipping_limit_date"]
 all_df = pd.read_csv("https://raw.githubusercontent.com/NerissaNikmatul/E-Commerce-/main/df.csv")
 all_df.sort_values(by="order_approved_at", inplace=True)
 all_df.reset_index(inplace=True)
-
-# Geolocation Dataset
-geolocation = pd.read_csv('https://raw.githubusercontent.com/NerissaNikmatul/E-Commerce-/main/geolocation.csv')
-data = geolocation.drop_duplicates(subset='customer_unique_id')
 
 for col in datetime_cols:
     all_df[col] = pd.to_datetime(all_df[col])
@@ -24,79 +20,128 @@ min_date = all_df["order_approved_at"].min()
 max_date = all_df["order_approved_at"].max()
 
 # Sidebar
-st.sidebar.title("E-Commerce Dashboard")
+with st.sidebar:
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.write(' ')
+    with col2:
+        st.image("https://raw.githubusercontent.com/NerissaNikmatul/E-Commerce-/main/dashboard/Systems%20and%20technology%20programming%20company%20logo.png", width=100)
+    with col3:
+        st.write(' ')
 
-# Date Range
-start_date, end_date = st.sidebar.date_input(
-    label="Select Date Range",
-    value=[min_date, max_date],
-    min_value=min_date,
-    max_value=max_date
-)
+    # Date Range
+    start_date, end_date = st.date_input(
+        label="Select Date Range",
+        value=[min_date, max_date],
+        min_value=min_date,
+        max_value=max_date
+    )
 
 # Main
 main_df = all_df[(all_df["order_approved_at"] >= str(start_date)) & 
                  (all_df["order_approved_at"] <= str(end_date))]
 
+# Function to analyze data
 function = DataAnalyzer(main_df)
-map_plot = BrazilMapPlotter(data, plt, urllib, st)
 
+# Generate data for visualization
 daily_orders_df = function.create_daily_orders_df()
 sum_spend_df = function.create_sum_spend_df()
 sum_order_items_df = function.create_sum_order_items_df()
 review_score, common_score = function.review_score_df()
 order_status, common_status = function.create_order_status()
 
-# Title and Overview Section
+# Define your Streamlit app
 st.title("E-Commerce Public Data Analysis")
-st.write("This dashboard provides insights from E-Commerce public data.")
 
-# Metrics at a Glance
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.metric("Total Orders", f"{daily_orders_df['order_count'].sum()}")
-with col2:
-    st.metric("Total Revenue", f"{daily_orders_df['revenue'].sum()}")
-with col3:
-    st.metric("Average Spend", f"{sum_spend_df['total_spend'].mean():.2f}")
+# Add text or descriptions
+st.write("**This is a dashboard for analyzing E-Commerce public data.**")
 
-# Daily Orders Delivered - Switched to Bar Chart for variety
+# Daily Orders Delivered
 st.subheader("Daily Orders Delivered")
+col1, col2 = st.columns(2)
+
+with col1:
+    total_order = daily_orders_df["order_count"].sum()
+    st.markdown(f"Total Order: **{total_order}**")
+
+with col2:
+    total_revenue = daily_orders_df["revenue"].sum()
+    st.markdown(f"Total Revenue: **{total_revenue}**")
+
 fig, ax = plt.subplots(figsize=(12, 6))
-sns.barplot(x=daily_orders_df["order_approved_at"], 
-            y=daily_orders_df["order_count"], 
-            color="#90CAF9", ax=ax)
-ax.set_xlabel("Order Date")
-ax.set_ylabel("Order Count")
+sns.lineplot(
+    x=daily_orders_df["order_approved_at"],
+    y=daily_orders_df["order_count"],
+    marker="o",
+    linewidth=2,
+    color="#90CAF9"
+)
 ax.tick_params(axis="x", rotation=45)
+ax.tick_params(axis="y", labelsize=15)
 st.pyplot(fig)
 
-# Customer Spend Money - Line Plot with points highlighted
+# Customer Spend Money
 st.subheader("Customer Spend Money")
+col1, col2 = st.columns(2)
+
+with col1:
+    total_spend = sum_spend_df["total_spend"].sum()
+    st.markdown(f"Total Spend: **{total_spend}**")
+
+with col2:
+    avg_spend = sum_spend_df["total_spend"].mean()
+    st.markdown(f"Average Spend: **{avg_spend}**")
+
 fig, ax = plt.subplots(figsize=(12, 6))
-sns.lineplot(data=sum_spend_df, x="order_approved_at", y="total_spend", marker="o", linewidth=2, color="#FFA726")
-ax.set_xlabel("Order Date")
-ax.set_ylabel("Total Spend")
+sns.lineplot(
+    data=sum_spend_df,
+    x="order_approved_at",
+    y="total_spend",
+    marker="o",
+    linewidth=2,
+    color="#90CAF9"
+)
 ax.tick_params(axis="x", rotation=45)
+ax.tick_params(axis="y", labelsize=15)
 st.pyplot(fig)
 
-# Order Items - Stacked Bar Chart
+# Order Items
 st.subheader("Order Items")
-fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(15, 6))
+col1, col2 = st.columns(2)
 
-sns.barplot(x="product_count", y="product_category_name_english", data=sum_order_items_df.head(5), palette="coolwarm", ax=ax1)
-ax1.set_title("Most Sold Products")
-ax1.set_xlabel("Number of Sales")
+with col1:
+    total_items = sum_order_items_df["product_count"].sum()
+    st.markdown(f"Total Items: **{total_items}**")
 
-sns.barplot(x="product_count", y="product_category_name_english", data=sum_order_items_df.sort_values(by="product_count").head(5), palette="coolwarm", ax=ax2)
-ax2.set_title("Fewest Products Sold")
-ax2.set_xlabel("Number of Sales")
-ax2.yaxis.set_label_position("right")
-ax2.yaxis.tick_right()
+with col2:
+    avg_items = sum_order_items_df["product_count"].mean()
+    st.markdown(f"Average Items: **{avg_items}**")
+
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(45, 25))
+
+sns.barplot(x="product_count", y="product_category_name_english", 
+            data=sum_order_items_df.head(5), palette="viridis", ax=ax[0])
+ax[0].set_ylabel(None)
+ax[0].set_xlabel("Number of Sales", fontsize=80)
+ax[0].set_title("Most sold products", loc="center", fontsize=90)
+ax[0].tick_params(axis='y', labelsize=55)
+ax[0].tick_params(axis='x', labelsize=50)
+
+sns.barplot(x="product_count", y="product_category_name_english", 
+            data=sum_order_items_df.sort_values(by="product_count", ascending=True).head(5), palette="viridis", ax=ax[1])
+ax[1].set_ylabel(None)
+ax[1].set_xlabel("Number of Sales", fontsize=80)
+ax[1].invert_xaxis()
+ax[1].yaxis.set_label_position("right")
+ax[1].yaxis.tick_right()
+ax[1].set_title("Fewest products sold", loc="center", fontsize=90)
+ax[1].tick_params(axis='y', labelsize=55)
+ax[1].tick_params(axis='x', labelsize=50)
 
 st.pyplot(fig)
 
-# Review Score - Pie Chart for Variation
+# Review Score
 st.subheader("Review Score")
 col1, col2 = st.columns(2)
 
@@ -108,11 +153,24 @@ with col2:
     most_common_review_score = review_score.value_counts().idxmax()
     st.markdown(f"Most Common Review Score: **{most_common_review_score}**")
 
-fig, ax = plt.subplots(figsize=(8, 6))
-review_counts = review_score.value_counts()
-ax.pie(review_counts, labels=review_counts.index, autopct='%1.1f%%', startangle=90, colors=sns.color_palette("viridis", len(review_counts)))
-ax.set_title("Distribution of Review Scores")
+fig, ax = plt.subplots(figsize=(12, 6))
+colors = sns.color_palette("viridis", len(review_score))
+
+sns.barplot(x=review_score.index,
+            y=review_score.values,
+            order=review_score.index,
+            palette=colors)
+
+plt.title("Customer Review Scores for Service", fontsize=15)
+plt.xlabel("Rating")
+plt.ylabel("Count")
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+
+# Menambahkan label di atas setiap bar
+for i, v in enumerate(review_score.values):
+    ax.text(i, v + 5, str(v), ha='center', va='bottom', fontsize=12, color='black')
+
 st.pyplot(fig)
 
-# Footer
-st.caption("Data analysis and dashboard created by Nerissa Nikmatul Qoiriyah, 2024.")
+st.caption('Copyright (C) Nerissa Nikmatul Qoiriyah 2024')
