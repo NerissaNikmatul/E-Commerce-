@@ -1,21 +1,39 @@
 # Dicoding Collection Dashboard ✨
-# E-Commerce Public Data Analysis with Python
+## E-Commerce Public Data Analysis with Python
 
 ![E-Commerce Data Dashboard](https://github.com/NerissaNikmatul/E-Commerce-/blob/main/Picture/Screenshot%202024-10-02%20204213.png)
 
 [E-Commerce Data Dashboard Streamlit App](https://nerissanikma.streamlit.app/)
 
+## Deskripsi Proyek
+Proyek ini bertujuan untuk menganalisis data publik dari e-commerce menggunakan Python. Dashboard yang dibuat menampilkan visualisasi data untuk menjawab pertanyaan bisnis penting, seperti tren penjualan harian dan total pengeluaran pelanggan. Dengan menggunakan Streamlit, pengguna dapat berinteraksi dengan data secara dinamis.
+
 ## Table of Contents
 - [Project Structure](#project-structure)
-- [Run steamlit app](#Run-steamlit-app)
+- [Run Streamlit App](#run-streamlit-app)
+- [Setup Environment](#setup-environment)
 
 ## Project Structure
-- `dashboard`: This directory contains dashboard.py which is used to create dashboards of data analysis results.
-- `data`: Directory containing the raw CSV data files.
-- `notebook.ipynb`: This file is used to perform data analysis.
-- `README.md`: This documentation file.
+- `dashboard`: Direktori ini berisi `dashboard.py` yang digunakan untuk membuat dashboard dari hasil analisis data.
+- `data`: Direktori yang berisi file CSV data mentah.
+- `notebook.ipynb`: File ini digunakan untuk melakukan analisis data.
+- `README.md`: File dokumentasi ini.
 
-## Run steamlit app
-```
-streamlit run Dashboard1.py
-```
+## Setup Environment
+Untuk menyiapkan lingkungan pengembangan, ikuti langkah-langkah berikut:
+
+```bash
+# Buat direktori untuk proyek analisis data
+mkdir E-commerce
+
+# Masuk ke dalam direktori proyek
+cd E-commerce
+
+# Inisialisasi proyek dengan pipenv
+pipenv install
+
+# Masuk ke dalam shell virtual environment
+pipenv shell
+
+# Install semua dependensi dari file requirements.txt
+pip install -r requirements.txt
