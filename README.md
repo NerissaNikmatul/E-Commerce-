@@ -1,8 +1,13 @@
-# E-Commerce Public Data Analysis with Python - Dicoding
+# Dicoding Collection Dashboard ✨
+# E-Commerce Public Data Analysis with Python
 
 ![E-Commerce Data Dashboard](https://github.com/NerissaNikmatul/E-Commerce-/tree/main/Picture)
 
 [E-Commerce Data Dashboard Streamlit App](https://nerissanikma.streamlit.app/)
+
+## Table of Contents
+- [Project Structure](#project-structure)
+- [Run steamlit app](#Run-steamlit-app)
 
 ## Project Structure
 - `dashboard`: This directory contains dashboard.py which is used to create dashboards of data analysis results.
