@@ -6,16 +6,17 @@ import streamlit as st
 import urllib
 from func import DataAnalyzer, BrazilMapPlotter
 
-sns.set(style='dark')
+sns.set(style='white')
 
 # Dataset
 datetime_cols = ["order_approved_at", "order_delivered_carrier_date", "order_delivered_customer_date", "order_estimated_delivery_date", "order_purchase_timestamp", "shipping_limit_date"]
-all_df = pd.read_csv("https://github.com/NerissaNikmatul/E-Commerce-/blob/main/df.csv")
+all_df = pd.read_csv("https://raw.githubusercontent.com/NerissaNikmatul/E-Commerce-/main/df.csv")
+")
 all_df.sort_values(by="order_approved_at", inplace=True)
 all_df.reset_index(inplace=True)
 
 # Geolocation Dataset
-geolocation = pd.read_csv('https://github.com/NerissaNikmatul/E-Commerce-/blob/main/geolocation.csv')
+geolocation = pd.read_csv('https://raw.github.com/NerissaNikmatul/E-Commerce-/blob/main/geolocation.csv')
 data = geolocation.drop_duplicates(subset='customer_unique_id')
 
 for col in datetime_cols:
