@@ -27,4 +27,5 @@ mkdir E-commerce
 cd E-commerce
 pipenv install
 pipenv shell
-pip install -r requirements.txt
+pipenv install pandas matplotlib seaborn streamlit
+
