@@ -17,6 +17,7 @@ Proyek ini bertujuan untuk menganalisis data publik dari e-commerce menggunakan 
 ## Table of Contents
 - [Project Structure](#project-structure)
 - [Setup Environment](#setup-environment)
+- [Run streamlit app](#run-streamlit-app)
 
 ## Project Structure
 - Dasboard1.py: File utama yang berisi kode untuk dashboard Streamlit.
@@ -34,4 +35,8 @@ cd E-Commerce
 pipenv install
 pipenv shell
 pipenv install pandas matplotlib seaborn streamlit
-
+```
+## Run streamlit app
+```
+streamlit run Dasboard1,py
+```
